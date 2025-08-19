@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend - Youtube",
+  "keywords": [
+    "Javascript",
+    "backend"
+  ],
+  "homepage": "https://github.com/Yahyakhalid12/Backend#readme",
+  "bugs": {
+    "url": "https://github.com/Yahyakhalid12/Backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yahyakhalid12/Backend.git"
+  },
+  "license": "ISC",
+  "author": "Yahya Khalid",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
