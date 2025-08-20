@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 import mongoose from "mongoose";
 import DB_NAME from "./constants.js";
 import connectDB from "./db/index.js";
+import { app } from "./app.js";
 
 dotenv.config({
     path: './env'
@@ -11,11 +12,11 @@ dotenv.config({
 
 connectDB()
 .then( () => {
-    application.on("error", (error) => {
+    app.on("error", (error) => {
         console.log("Error: ", error)
         throw error
     })
-    application.listen(process.env.PORT || 8000,() => {
+    app.listen(process.env.PORT || 8000,() => {
         console.log(`Server is running at PORT: ${process.env.PORT}`)
     })
 })
@@ -49,12 +50,12 @@ import express from "express";
     try {
         await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)
 
-        application.on("error", (error) => {
-            console.log("Application is not able to connect to DB_NAME", error)
+        app.on("error", (error) => {
+            console.log("app is not able to connect to DB_NAME", error)
             throw error
         })
 
-        application.listen(process.env.PORT, () => {
+        app.listen(process.env.PORT, () => {
             console.log(`App is listening on port ${process.env.PORT}`)
         })
 
