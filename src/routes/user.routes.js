@@ -5,19 +5,23 @@ import { upload } from "../middlewares/multer.middleware.js";
 
 const router = Router();
 
-router.route("/register").post(asyncHandler(
-    upload.fields([
-        {
-            name: "avatar",
-            maxCount: 1
-        },
-        {
-            name: "coverImage",
-            maxCount: 1
-        }
-    ]),
-    registerUser
-))
+router.route("/register")
+    .get((req, res) => {
+        res.json({ message: "Register GET endpoint working" })
+    })
+    .post(
+        upload.fields([
+            {
+                name: "avatar",
+                maxCount: 1
+            },
+            {
+                name: "coverImage",
+                maxCount: 1
+            }
+        ]),
+        asyncHandler(registerUser)
+    )
 router.route("/login").post(asyncHandler(registerUser))
 
 

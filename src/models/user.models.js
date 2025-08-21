@@ -3,14 +3,6 @@ import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 
 const userSchema = new Schema( {
-    id: {
-        type: String,
-        unique: true,
-        required: true,
-        lowercase: true,
-        trim: true,
-        index: true
-    },
     username: {
         type: String,
         unique: true,
@@ -73,9 +65,9 @@ userSchema.methods.generateAccessToken = function () {
         username: this.username,
         fullName: this.fullName
     },
-    process.env.ACCESS_TOKEN_SECRET,
+    process.env.ACCESS_TOKEN_SECRET || "default_secret",
     {
-        expiresIn: process.env.ACCESS_TOKEN_EXPIRY
+        expiresIn: process.env.ACCESS_TOKEN_EXPIRY || "1d"
     }
 )
 }
@@ -85,9 +77,9 @@ userSchema.methods.generateRefreshToken = function () {
     {
         _id: this._id,
     },
-    process.env.REFRESH_TOKEN_SECRET,
+    process.env.REFRESH_TOKEN_SECRET || "default_refresh_secret",
     {
-        expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+        expiresIn: process.env.REFRESH_TOKEN_EXPIRY || "10d"
     }
 )
 }
