@@ -12,3 +12,5 @@ class ApiResponse {                   // Define a class named 'ApiResponse'
         this.success = statusCode < 400  // Boolean flag: true if status < 400 (means no error)
     }
 }
+
+export { ApiResponse }
