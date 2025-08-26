@@ -25,6 +25,9 @@ router.route("/login").post(loginUser)
 
 router.route("/logout").post(requireAuth, logoutUser)
 router.route("/refresh-token").post(refreshAccessToken)
+router.route("/update-password").post(requireAuth, updatePassword)
+router.route("/update-profile").post(requireAuth, upload.single("avatar"), updateProfile)
+router.route("/update-cover").post(requireAuth, upload.single("cover"), updateCover)
 
 
 export default router;

@@ -245,17 +245,17 @@ const changeCurrentUserPassword = asyncHandler(async(req,res) => {
 const getCurrentUser = asyncHandler(async(req,res) => {
     return res
     .status(200)
-    .json(200, req.user, "Current user fetch succesfully")
+    .json(new ApiResponse(200, req.user, "Current user fetch succesfully"))
 })
 
-cosnt updateAccountHandler = asyncHandler(async(req,res) => {
+const updateAccountHandler = asyncHandler(async(req,res) => {
     const {fullName, email} = req.body
 
     if(!email && !fullName){
         throw new ApiError(400, "Fields are required")
     }
 
-    User.findById(
+    const user = await User.findById(
         req.user?._id,
         {
             $set: {
@@ -284,9 +284,14 @@ const updateUserAvatar = asyncHandler(async(req,res) => {
         throw new ApiError(400, "Error while uploading an avatar")
     }
 
-    // updateUserAvatar
+    // delete old avatar
+    if(req.user?.avatar){
+        await cloudinary.uploader.destroy(req.user?.avatar)
+    }
 
-    const user = await.User.findByIdAndUpdate(
+
+    // updateUserAvatar
+    const user = await User.findByIdAndUpdate(
         req.user?._id,
         {
             $set: {
@@ -311,8 +316,13 @@ const updateUserCoverImage = asyncHandler(async(req, res) => {
     if(coverImage.url){
         throw new ApiError(400, "Error while uploading cover")
     }
+    
+    // if cover image exsisted before then it got deleted
+    if(req.user?.coverImage){
+        await cloudinary.uploader.destroy(req.user?.coverImage)
+    }
 
-    const user = await.User.findByIdAndUpdate(
+    const user = await User.findByIdAndUpdate(
         req.user?._id,
         {
             $set: {
